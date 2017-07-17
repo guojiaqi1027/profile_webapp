@@ -1,24 +1,20 @@
-from pymongo import MongoClient
+from mongodb_client import mongodb_client
 from configs.mongo_config import MONGO_CONFIG
 
 class MongoDBDao:
+    def __init__(self, mongodb_client, collection):
+        self.client = mongodb_client
+        self.collection = mongodb_client.get_collection(collection)
 
 
-    def __init__(self, db_entry_point, db_port, db_name):
-        self.mongo_client = MongoClient()
-        self.db = mongo_client[db]
+    def fetch_single_doc(self, filter, projection={'_id': False}):
+        doc = self.collection.find_one(filter, projection)
+        return doc
 
 
-    def get_single_object(filter, collection):
-        collection = self.db[collection]
+    def fetch_batch_docs(self, filter, projection={'_id': False}):
         pass
 
 
-    def get_batch_objects(filter, collection):
-        collection = self.db[collection]
-        pass
-
-
-mongodb_dao = MongoDBDao(MONGO_CONFIG.ENTRY_POINT,
-                            MONGO_CONFIG.PORT,
-                            MONGO_CONFIG.DB_NAME)
+user_credential_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_CREDENTIAL_COLLECTION)
+user_profile_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_PROFILE_COLLECTION)

@@ -1,6 +1,8 @@
 from flask import Flask
-from views.controller import controller
+from views import controller, public_api
+
 app = Flask(__name__)
 app.register_blueprint(controller)
+app.register_blueprint(public_api)
 if __name__ == '__main__':
-    app.run(port=8000)
+    app.run(port=9000)
