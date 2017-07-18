@@ -10,6 +10,7 @@ class TokenRedisClient:
 
 
     def set_user_token(self, uid, token):
-      self.client.set_value(uid, token, expire=REDIS_CONFIG.DEFAULT_EXPIRE)
+      self.client.set_value(value=uid, key=token, expire=REDIS_CONFIG.DEFAULT_EXPIRE)
+
 
 token_redis_client = TokenRedisClient(redis_client)
