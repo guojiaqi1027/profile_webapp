@@ -1,7 +1,7 @@
-from query_db_service import query_user_credential
-from query_cache_service import create_token_for_uid
+from service.query_db_service import query_user_credential
+from service.query_cache_service import create_token_for_uid
 
-def authentication(username, password):
+def authentication_action(username, password):
     filter = {'username': username}
     doc = query_user_credential(filter)
     doc_password = doc.get('password')
