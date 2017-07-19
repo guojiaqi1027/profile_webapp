@@ -2,6 +2,7 @@ class MongoConfig:
     DB_NAME = 'profile_app'
     USER_CREDENTIAL_COLLECTION = 'user_credential'
     USER_PROFILE_COLLECTION = 'user_profile'
+    SEQUENCE_COLLECTION = 'sequence'
 
 
 class MongoLocalConfig(MongoConfig):
