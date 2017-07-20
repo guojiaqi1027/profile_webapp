@@ -19,9 +19,19 @@ def authentication_action(username, password):
 
     else:
         uid = doc.get('uid')
-        token = create_token_for_uid(uid)
+        return create_autehntication_for_uid(uid)
+
+
+def create_autehntication_for_uid(uid):
+    if not uid:
         ret = {
-          'code': 1,
-          'token': token
+            'code': -104,
+            'msg': 'Token error, cannot get uid'
         }
         return ret
+    token = create_token_for_uid(uid)
+    ret = {
+        'code': 1,
+        'token': token
+    }
+    return ret

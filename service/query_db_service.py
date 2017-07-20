@@ -6,12 +6,18 @@ def query_user_profile(filter):
     return doc
 
 
+def insert_user_profile(doc):
+    user_profile_dao.insert_single_doc(doc)
+
+
 def query_user_credential(filter):
     doc = user_credential_dao.fetch_single_doc(filter);
     return doc
 
-def insert_user_credential(filter):
-    pass
+
+def insert_user_credential(doc):
+    user_credential_dao.insert_single_doc(doc)
+    return
 
 
 def get_sequence(seq_id):
@@ -36,7 +42,7 @@ def increment_sequence(seq_id):
     return seq['seq']
 
 
-def vendor_id(seq_id):
+def vending_id(seq_id):
     id = get_sequence(seq_id) + 1
     id = increment_sequence(seq_id)
     return id
