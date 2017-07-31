@@ -4,8 +4,8 @@ class StartupPanel extends React.Component {
   render() {
     return (
       <div>
-        <button>Login</button>
-        <button>Signup</button>
+        <a href='/login'>Login</a>
+        <a href='/signup'>Signup</a>
       </div>
     )
   }
