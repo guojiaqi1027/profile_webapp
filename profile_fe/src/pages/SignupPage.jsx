@@ -2,6 +2,10 @@ import React from 'react'
 import SignupCredentialPanel from '../components/panel/signup/SignupCredentialPanel'
 import SignupProfilePanel from '../components/panel/signup/SignupProfilePanel'
 import FormConfirmPanel from '../components/panel/common/FormConfirmPanel'
+import $ from 'jquery'
+
+var CONSTANTS = require('../utils/constants');
+
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +16,7 @@ class SignupPage extends React.Component {
       }
     }
   }
+
   onCredentialChange = (event) => {
     var credential = this.state.credential;
     credential[event.target.name] = event.target.value;
@@ -29,7 +34,19 @@ class SignupPage extends React.Component {
   }
 
   submitForm = () => {
-    alert(this.state);
+    $.ajax(CONSTANTS.AUTH_SIGNUP_URL, {
+      data: {
+        'credential': JSON.stringify(this.state.credential),
+        'profile': JSON.stringify(this.state.profile)
+      },
+      method: 'POST',
+      success: function(res) {
+        alert(res);
+      },
+      error: function(res) {
+        alert(res);
+      }
+    });
   }
 
   render() {
