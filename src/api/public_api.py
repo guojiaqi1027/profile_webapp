@@ -48,11 +48,16 @@ def authentication():
 
 @public_api.route('/signup', methods=['POST'])
 def user_signup():
-    credential = json.loads(request.values.get('credential'))
+    credential_raw = json.loads(request.values.get('credential'))
     profile = json.loads(request.values.get('profile'))
 
-    if not credential or not profile:
+    if not credential_raw or not profile:
         return failure_ret(code=-200, msg='Parameter error, credential or profile can not be empty')
+
+    credential = {
+        'username': credential_raw.get('username'),
+        'password': credential_raw.get('password')
+    }
 
     ret = signup(credential, profile)
     code = ret.get('code')
