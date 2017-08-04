@@ -3,7 +3,10 @@ from flask import Response, g
 
 
 def jsonify(*args, **kwargs):
-    return Response(jsonifyAsText(*args, **kwargs), mimetype='application/json')
+    headers = {
+      "Access-Control-Allow-Origin" : "*"
+    }
+    return Response(jsonifyAsText(*args, **kwargs), mimetype='application/json', headers=headers)
 
 
 def jsonifyAsText(*args, **kwargs):
