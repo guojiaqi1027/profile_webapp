@@ -12,10 +12,10 @@ class SignupCredentialPanel extends React.Component {
           <span>Username:</span><input name='username' onChange={ this.onChange }/>
         </div>
         <div>
-          <span>Password:</span><input name='password' onChange={ this.onChange }/>
+          <span>Password:</span><input type='password' name='password' onChange={ this.onChange }/>
         </div>
         <div>
-          <span>Repeat Password:</span><input name='re-password' onChange={ this.onChange }/>
+          <span>Repeat Password:</span><input type='password' name='re_password' onChange={ this.onChange }/>
         </div>
         <hr />
       </div>

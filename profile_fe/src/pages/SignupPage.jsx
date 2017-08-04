@@ -2,6 +2,7 @@ import React from 'react'
 import SignupCredentialPanel from '../components/panel/signup/SignupCredentialPanel'
 import SignupProfilePanel from '../components/panel/signup/SignupProfilePanel'
 import FormConfirmPanel from '../components/panel/common/FormConfirmPanel'
+import AlertPanel from '../components/panel/common/AlertPanel'
 import $ from 'jquery'
 
 var CONSTANTS = require('../utils/constants');
@@ -13,7 +14,9 @@ class SignupPage extends React.Component {
       credential: {
       },
       profile: {
-      }
+      },
+      password_match: true,
+      error_msg: " "
     }
   }
 
@@ -21,7 +24,9 @@ class SignupPage extends React.Component {
     var credential = this.state.credential;
     credential[event.target.name] = event.target.value;
     this.setState({
-      credential: credential
+      credential: credential,
+      password_match: credential.password == credential.re_password,
+      error_msg: credential.password == credential.re_password ? "" : "Password not match"
     });
   }
 
@@ -34,24 +39,31 @@ class SignupPage extends React.Component {
   }
 
   submitForm = () => {
-    $.ajax(CONSTANTS.AUTH_SIGNUP_URL, {
-      data: {
-        'credential': JSON.stringify(this.state.credential),
-        'profile': JSON.stringify(this.state.profile)
-      },
-      method: 'POST',
-      success: function(res) {
-        alert(res);
-      },
-      error: function(res) {
-        alert(res);
-      }
-    });
+    if (this.state.password_match) {
+      $.ajax(CONSTANTS.AUTH_SIGNUP_URL, {
+        data: {
+          'credential': JSON.stringify(this.state.credential),
+          'profile': JSON.stringify(this.state.profile)
+        },
+        //crossDomain: true,
+        method: 'POST',
+        success: function(res) {
+
+        },
+        error: function(res) {
+
+        }
+      });
+    }
+    else {
+      alert('password not match');
+    }
   }
 
   render() {
     return (
       <div>
+        <AlertPanel msg={ this.state.error_msg } />
         <SignupCredentialPanel onChange={ this.onCredentialChange }/>
         <SignupProfilePanel onChange={ this.onProfileChange }/>
         <FormConfirmPanel submit={ this.submitForm }/>
