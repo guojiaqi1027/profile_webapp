@@ -45,13 +45,18 @@ class SignupPage extends React.Component {
           'credential': JSON.stringify(this.state.credential),
           'profile': JSON.stringify(this.state.profile)
         },
-        //crossDomain: true,
         method: 'POST',
         success: function(res) {
+          if (res.success == 0) {
+            alert(res.msg);
+            return;
+          }
 
+          var ret = res.ret;
+          var expires = 1/48;
+          Cookies.set('user', ret, { expires: expires });
         },
         error: function(res) {
-
         }
       });
     }

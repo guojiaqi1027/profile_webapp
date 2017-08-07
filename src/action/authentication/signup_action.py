@@ -1,6 +1,7 @@
 from src.service import query_db_service
-from authentication_action import create_autehntication_for_uid
+from authentication_action import create_authentication_for_uid
 import datetime, re
+from src.action.profile.profile_action import get_profile_by_uid_action
 def signup(credential, profile):
     ret = validate_credential(credential)
     if ret.get('code') < 0:
@@ -11,7 +12,15 @@ def signup(credential, profile):
         return ret
 
     uid = insert_signup_to_db(credential, profile)
-    ret = create_autehntication_for_uid(uid)
+    token_ret = create_authentication_for_uid(uid)
+    token = token_ret['token']
+    profile = get_profile_by_uid_action(uid)
+    ret = {
+        'profile': profile,
+        'token': token,
+        'username': credential['username'],
+        'uid': uid
+    }
     return ret
 
 

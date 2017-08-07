@@ -1,5 +1,6 @@
 from src.service.query_db_service import query_user_credential
 from src.service.query_cache_service import create_token_for_uid
+from src.action.profile.profile_action import get_profile_by_uid_action
 
 def authentication_action(username, password):
     filter = {'username': username}
@@ -17,12 +18,22 @@ def authentication_action(username, password):
         ret['msg'] = 'Authentication failed, username and password not match'
         return ret
 
+
     else:
         uid = doc.get('uid')
-        return create_autehntication_for_uid(uid)
+        token_ret = create_authentication_for_uid(uid)
+        token = token_ret['token']
+        profile = get_profile_by_uid_action(uid)
+        ret = {
+          'profile': profile,
+          'token': token,
+          'username': username,
+          'uid': uid
+        }
+        return ret
 
 
-def create_autehntication_for_uid(uid):
+def create_authentication_for_uid(uid):
     if not uid:
         ret = {
             'code': -104,

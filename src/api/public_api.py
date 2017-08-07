@@ -3,6 +3,7 @@ from flask import Blueprint, request
 from src.service import query_db_service, query_cache_service
 from src.utils import jsonify, failure_ret
 from src.action.authentication import authentication_action, token_required, signup
+from src.action.profile import get_profile_by_uid_action 
 
 
 public_api = Blueprint('public_api', __name__, url_prefix='/public_api')
@@ -12,7 +13,7 @@ public_api = Blueprint('public_api', __name__, url_prefix='/public_api')
 def get_user_profile():
     uid = request.values.get('uid')
     uid = int(uid)
-    profile = query_db_service.query_user_profile(uid)
+    profile = get_profile_by_uid_action(uid)
     return jsonify(profile=profile, success=1)
 
 
@@ -31,14 +32,14 @@ def generate_token_for_uid():
     return jsonify(uid=uid, token=token, success=1)
 
 
-@public_api.route('/authentication')
+@public_api.route('/authentication', methods=['GET', 'POST'])
 def authentication():
     username = request.values.get('username')
     password = request.values.get('password')
     if not username or not password:
         return failure_ret(code=-100, msg="Missing Parameters")
     ret = authentication_action(username, password)
-    code = ret.get('code')
+    code = ret.get('code', 1)
     if code < 0:
         msg = ret.get('msg')
         return failure_ret(code=code, msg=msg)
