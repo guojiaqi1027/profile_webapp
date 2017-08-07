@@ -4,6 +4,7 @@ import SignupProfilePanel from '../components/panel/signup/SignupProfilePanel'
 import FormConfirmPanel from '../components/panel/common/FormConfirmPanel'
 import AlertPanel from '../components/panel/common/AlertPanel'
 import $ from 'jquery'
+import Cookies from 'js.cookie'
 
 var CONSTANTS = require('../utils/constants');
 
