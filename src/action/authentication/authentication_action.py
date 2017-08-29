@@ -23,11 +23,8 @@ def authentication_action(username, password):
         uid = doc.get('uid')
         token_ret = create_authentication_for_uid(uid)
         token = token_ret['token']
-        profile = get_profile_by_uid_action(uid)
         ret = {
-          'profile': profile,
           'token': token,
-          'username': username,
           'uid': uid
         }
         return ret

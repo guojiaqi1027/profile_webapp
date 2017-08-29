@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request
 from src.service import query_db_service, query_cache_service
-from src.utils import jsonify, failure_ret
+from src.utils import jsonify, failure_ret, token_ret
 from src.action.authentication import authentication_action, token_required, signup
 from src.action.profile import get_profile_by_uid_action 
 
@@ -9,7 +9,8 @@ from src.action.profile import get_profile_by_uid_action
 public_api = Blueprint('public_api', __name__, url_prefix='/public_api')
 
 
-@public_api.route('/get_user_profile')
+@public_api.route('/get_user_profile', methods=['GET', 'POST'])
+@token_required
 def get_user_profile():
     uid = request.values.get('uid')
     uid = int(uid)
@@ -44,7 +45,8 @@ def authentication():
         msg = ret.get('msg')
         return failure_ret(code=code, msg=msg)
     else:
-        return jsonify(ret=ret, success=1)
+        token = ret.get('token')
+        return token_ret(token=token, ret=ret, success=1)
 
 
 @public_api.route('/signup', methods=['POST'])
@@ -65,7 +67,8 @@ def user_signup():
     if code < 0:
         return failure_ret(code=code, msg=ret.get('msg'))
     else:
-        return jsonify(ret=ret, success=1)
+        token = ret.get('token')
+        return token_ret(token=token, ret=ret, success=1)
 
 @public_api.route('/test_seq', methods=['GET'])
 def test_seq():

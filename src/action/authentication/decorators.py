@@ -9,7 +9,7 @@ def token_required(func):
     """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        token = request.values.get('token')
+        token = request.cookies.get('token')
         if not token:
             return failure_ret(code=-100, msg='Token is missing')
 

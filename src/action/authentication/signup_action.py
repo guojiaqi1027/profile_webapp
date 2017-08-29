@@ -16,9 +16,7 @@ def signup(credential, profile):
     token = token_ret['token']
     profile = get_profile_by_uid_action(uid)
     ret = {
-        'profile': profile,
         'token': token,
-        'username': credential['username'],
         'uid': uid
     }
     return ret

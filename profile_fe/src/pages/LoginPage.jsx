@@ -3,7 +3,9 @@ import NavigatorPanel from '../components/panel/NavigatorPanel'
 import LoginPanel from '../components/panel/LoginPanel'
 import $ from 'jquery'
 import Cookies from 'js.cookie'
+import UTILS from '../utils/utils'
 var CONSTANTS = require('../utils/constants');
+
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -36,6 +38,7 @@ class LoginPage extends React.Component {
         'username': this.state.username,
         'password': this.state.password
       },
+      xhrFields: { withCredentials: true },
       method: 'POST',
       success: function (res) {
         if (res.success == 0) {
@@ -43,9 +46,9 @@ class LoginPage extends React.Component {
           return;
         }
         var ret = res.ret;
-        var expires = 1/48;
-        Cookies.set('user', ret, { expires: expires });
-        alert('success');
+        var uid = ret.uid;
+        UTILS.setCookie('uid', uid);
+        window.location.replace("/");
       },
       error: function(res) {
       }

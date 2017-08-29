@@ -52,10 +52,8 @@ class SignupPage extends React.Component {
             alert(res.msg);
             return;
           }
-
           var ret = res.ret;
-          var expires = 1/48;
-          Cookies.set('user', ret, { expires: expires });
+          UTILS.setCookie('uid', ret.uid);
         },
         error: function(res) {
         }
