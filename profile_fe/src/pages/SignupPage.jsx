@@ -5,9 +5,9 @@ import FormConfirmPanel from '../components/panel/common/FormConfirmPanel'
 import AlertPanel from '../components/panel/common/AlertPanel'
 import $ from 'jquery'
 import Cookies from 'js.cookie'
+import UTILS from '../utils/utils'
 
 var CONSTANTS = require('../utils/constants');
-
 class SignupPage extends React.Component {
   constructor(props) {
     super(props);
@@ -63,14 +63,16 @@ class SignupPage extends React.Component {
       alert('password not match');
     }
   }
-
+  cancelForm = () => {
+    window.location.replace('/');
+  }
   render() {
     return (
       <div>
         <AlertPanel msg={ this.state.error_msg } />
         <SignupCredentialPanel onChange={ this.onCredentialChange }/>
         <SignupProfilePanel onChange={ this.onProfileChange }/>
-        <FormConfirmPanel submit={ this.submitForm }/>
+        <FormConfirmPanel submit={ this.submitForm } cancel={ this.cancelForm }/>
       </div>
     )
   }
