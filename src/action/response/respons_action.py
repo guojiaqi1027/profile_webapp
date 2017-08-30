@@ -1,7 +1,7 @@
 import json
 from flask import Response, g
 from datetime import datetime, timedelta
-
+from src.service import query_cache_service
 
 def jsonify(*args, **kwargs):
     headers = {
@@ -48,4 +48,5 @@ def token_ret(token=None, success=1, **kwargs):
     expires = datetime.utcnow() + timedelta(minutes=28)
     resp = jsonify(success=success, **kwargs)
     resp.set_cookie("token", token, expires=expires)
+    query_cache_service.renew_token(token)
     return resp

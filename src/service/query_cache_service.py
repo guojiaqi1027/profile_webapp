@@ -10,3 +10,8 @@ def create_token_for_uid(uid):
     token = generate_token()
     token_redis_client.set_user_token(uid=str(uid), token=token)
     return token
+
+
+def renew_token(token):
+    uid = token_redis_client.get_user_uid(token)
+    token_redis_client.set_user_token(uid=str(uid), token=token)

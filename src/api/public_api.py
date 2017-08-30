@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint, request
 from src.service import query_db_service, query_cache_service
-from src.utils import jsonify, failure_ret, token_ret
+from src.action.response.respons_action import jsonify, failure_ret, token_ret
 from src.action.authentication import authentication_action, token_required, signup
 from src.action.profile import get_profile_by_uid_action 
 
