@@ -11,14 +11,10 @@ class NavigatorPanel extends React.Component {
   }
 
   init = () => {
-    var uid = Cookies.get('uid');
-    var token = Cookies.get('token');
     this.state = {
-      uid: uid,
-      token: token,
       profile: null
     };
-    if (this.state.uid) {
+    if (Cookies.get('token')) {
       this.getProfile();
     }
   }
@@ -26,9 +22,6 @@ class NavigatorPanel extends React.Component {
   getProfile = () => {
     var self = this;
     $.ajax(CONSTANTS.GET_PROFILE_URL, {
-      data: {
-        uid: this.state.uid
-      },
       method: 'POST',
       xhrFields: { withCredentials: true },
       success: function (res) {
@@ -47,11 +40,8 @@ class NavigatorPanel extends React.Component {
 
   onLogoutClick = (event) => {
      this.setState({
-      uid: null,
-      token: null,
       profile: null
     });
-    Cookies.remove('uid');
     Cookies.remove('token');
     window.location.replace('/');
     return;

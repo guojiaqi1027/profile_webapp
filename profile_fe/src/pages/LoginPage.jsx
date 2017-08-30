@@ -45,9 +45,6 @@ class LoginPage extends React.Component {
           alert(res.msg);
           return;
         }
-        var ret = res.ret;
-        var uid = ret.uid;
-        UTILS.setCookie('uid', uid);
         window.location.replace("/");
       },
       error: function(res) {

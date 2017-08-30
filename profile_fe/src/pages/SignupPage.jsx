@@ -53,7 +53,6 @@ class SignupPage extends React.Component {
             return;
           }
           var ret = res.ret;
-          UTILS.setCookie('uid', ret.uid);
         },
         error: function(res) {
         }

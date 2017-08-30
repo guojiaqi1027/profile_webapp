@@ -14,9 +14,10 @@ def token_required(func):
             return failure_ret(code=-100, msg='Token is missing')
 
         uid = query_cache_service.get_uid_by_token(token)
+        uid = int(uid)
         if not uid:
             return failure_ret(code=-101, msg="Token is invalid")
         else:
-            return func(*args, **kwargs)
+            return func(uid=uid, token=token, *args, **kwargs)
 
     return wrapper

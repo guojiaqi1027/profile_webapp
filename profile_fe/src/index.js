@@ -9,7 +9,7 @@ import DashboardPage from './pages/DashboardPage';
 import { Route, Link, BrowserRouter, Switch } from 'react-router-dom'
 import Cookies from 'js.cookie';
 
-var startup = Cookies.get('uid') ? DashboardPage : StartupPage;
+var startup = Cookies.get('token') ? DashboardPage : StartupPage;
 ReactDOM.render(
   (
     <div>

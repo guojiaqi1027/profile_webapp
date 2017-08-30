@@ -36,12 +36,16 @@ def successful_ret(**kwargs):
 # -206 Email format invalid
 # -207 Phone number format invalid
 
+# -21X Summary fail
+# -210 Summary length error
+
+
 def failure_ret(code=-1, **kwargs):
     return jsonify(success=0, code=code, **kwargs)
 
 
-def token_ret(token=None, **kwargs):
-    expires = datetime.now() + timedelta(minutes=30)
-    resp = jsonify(**kwargs)
+def token_ret(token=None, success=1, **kwargs):
+    expires = datetime.utcnow() + timedelta(minutes=28)
+    resp = jsonify(success=success, **kwargs)
     resp.set_cookie("token", token, expires=expires)
     return resp

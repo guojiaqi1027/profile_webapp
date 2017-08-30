@@ -69,9 +69,3 @@ def user_signup():
     else:
         token = ret.get('token')
         return token_ret(token=token, ret=ret, success=1)
-
-@public_api.route('/test_seq', methods=['GET'])
-def test_seq():
-    id = request.values.get('id')
-    seq_id = query_db_service.vending_id(id)
-    return jsonify(seq_id=seq_id)

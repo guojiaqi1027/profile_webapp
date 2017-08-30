@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import Cookies from 'js.cookie';
 import FormConfirmPanel from 'components/panel/common/FormConfirmPanel';
+import AlertPanel from 'components/panel/common/AlertPanel';
 var CONSTANTS = require('utils/constants');
 class ProfilePanel extends React.Component {
   constructor(props) {
@@ -13,36 +14,33 @@ class ProfilePanel extends React.Component {
     this.init();
   };
   old_profile = {};
+
   panelStates = {
     0: 'Initialing',
     1: 'View',
     2: 'Edit'
   };
 
+  skipField = new Set(['username', 'uid']);
+
   init = () => {
     var self = this;
-    var uid = Cookies.get('uid');
-    if (uid) {
-      $.ajax(CONSTANTS.GET_PROFILE_URL, {
-        data: {
-          uid: uid
-        },
-        xhrFields: { withCredentials: true },
-        method: 'POST',
-        success: function (res) {
-          if (res.success == 0) {
-            alert(res.msg);
-            return;
-          }
-          else {
-            self.setState({
-              profile: res.profile,
-              panelState: 1
-            });
-          }
+    $.ajax(CONSTANTS.GET_PROFILE_URL, {
+      xhrFields: { withCredentials: true },
+      method: 'POST',
+      success: function (res) {
+        if (res.success == 0) {
+          alert(res.msg);
+          return;
         }
-      });
-    }
+        else {
+          self.setState({
+            profile: res.profile,
+            panelState: 1
+          });
+        }
+      }
+    });
   };
 
   onPropertyChange = (event) => {
@@ -50,7 +48,6 @@ class ProfilePanel extends React.Component {
     profile[event.target.name] = event.target.value;
     var state = this.state;
     this.setState({
-      uid: state.uid,
       profile: profile,
       panelState: state.panelState
     });
@@ -58,18 +55,30 @@ class ProfilePanel extends React.Component {
 
   onEditClick = () => {
     this.old_profile = Object.assign({}, this.state.profile);
-    console.log(this.old_profile);
     this.setState({
       panelState: 2
     });
   };
 
   onSubmitUpdate = () => {
-
+    var self = this;
+    $.ajax(CONSTANTS.UPDATE_PROFILE_URL, {
+      data: {
+        profile: JSON.stringify(self.state.profile)
+      },
+      xhrFields: { withCredentials: true },
+      method: 'POST',
+      success: function (res) {
+        if (res.success == 0 ){
+          alert(res.msg);
+          return;
+        }
+        window.location.reload();
+      }
+    });
   };
 
   onCancelUpdate = () => {
-    console.log(this.old_profile);
     this.setState({
       profile: this.old_profile,
       panelState: 1
@@ -88,6 +97,9 @@ class ProfilePanel extends React.Component {
     var self = this;
     var view = [];
     $.each(self.state.profile, function (key, value) {
+      if (self.skipField.has(key)) {
+        return;
+      }
       var field;
       if (self.state.panelState == 1) {
         field = <span>{ value }</span>;
@@ -124,6 +136,12 @@ class ProfilePanel extends React.Component {
     );
   };
 
+  renderAlertPanel = () => {
+    if (this.state.err_msg) {
+      return (<AlertPanel msg={ this.state.error_msg } />);
+    }
+    else return null;
+  };
   render() {
     if (this.state.panelState == 0) {
       return (
@@ -134,6 +152,7 @@ class ProfilePanel extends React.Component {
     }
     return (
       <div>
+        { this.renderAlertPanel() }
         { this.renderPanelHead() }
         { this.renderUserProfile() }
         { this.renderConfirmControl() }
