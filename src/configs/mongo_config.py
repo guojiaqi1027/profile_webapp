@@ -3,6 +3,7 @@ class MongoConfig:
     USER_CREDENTIAL_COLLECTION = 'user_credential'
     USER_PROFILE_COLLECTION = 'user_profile'
     SEQUENCE_COLLECTION = 'sequence'
+    USER_SUMMARY_COLLECTION = 'user_summary'
 
 
 class MongoLocalConfig(MongoConfig):

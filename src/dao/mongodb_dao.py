@@ -27,6 +27,11 @@ class MongoDBDao:
         self.collection.update_one(filter, update)
 
 
+    def count_docs(self, filter):
+        count = self.collection.count(filter)
+        return count
+
 user_credential_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_CREDENTIAL_COLLECTION)
 user_profile_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_PROFILE_COLLECTION)
 seq_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.SEQUENCE_COLLECTION)
+user_summary_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_SUMMARY_COLLECTION)

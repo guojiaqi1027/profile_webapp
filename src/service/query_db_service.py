@@ -1,4 +1,4 @@
-from src.dao.mongodb_dao import user_profile_dao, user_credential_dao, seq_dao
+from src.dao.mongodb_dao import user_profile_dao, user_credential_dao, seq_dao, user_summary_dao
 
 
 def query_user_profile(filter):
@@ -9,6 +9,8 @@ def query_user_profile(filter):
 def insert_user_profile(doc):
     user_profile_dao.insert_single_doc(doc)
 
+def update_user_profile(filter, doc):
+    user_profile_dao.update_single_doc(filter, doc)
 
 def query_user_credential(filter):
     doc = user_credential_dao.fetch_single_doc(filter);
@@ -46,3 +48,21 @@ def vending_id(seq_id):
     id = get_sequence(seq_id) + 1
     id = increment_sequence(seq_id)
     return id
+
+
+def insert_user_summary(doc):
+    user_summary_dao.insert_single_doc(doc)
+
+
+def query_user_summary(filter):
+    doc = user_summary_dao.fetch_single_doc(filter)
+    return doc
+
+
+def update_user_summary(filter, doc):
+    doc = user_summary_dao.update_single_doc(filter, doc)
+
+
+def count_user_summary(filter):
+    count = user_summary_dao.count_docs(filter)
+    return count
