@@ -142,6 +142,7 @@ class ProfilePanel extends React.Component {
     }
     else return null;
   };
+
   render() {
     if (this.state.panelState == 0) {
       return (
@@ -159,6 +160,6 @@ class ProfilePanel extends React.Component {
       </div>
     );
   }
-}
+};
 
 export default ProfilePanel;

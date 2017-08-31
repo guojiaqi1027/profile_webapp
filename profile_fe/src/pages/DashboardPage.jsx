@@ -3,7 +3,9 @@ import Cookies from 'js.cookie';
 import $ from 'jquery';
 import ProfilePanel from 'components/panel/editablePanel/ProfilePanel';
 import SummaryPanel from 'components/panel/editablePanel/SummaryPanel';
+import EducationList from 'components/list/EducationList';
 var CONSTANTS = require('utils/constants');
+
 class DashboardPage extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,7 @@ class DashboardPage extends React.Component {
       <div>
         <ProfilePanel />
         <SummaryPanel />
+        <EducationList />
       </div>
     )
   };

@@ -4,6 +4,7 @@ class MongoConfig:
     USER_PROFILE_COLLECTION = 'user_profile'
     SEQUENCE_COLLECTION = 'sequence'
     USER_SUMMARY_COLLECTION = 'user_summary'
+    USER_EDUCATION_COLLECTION = 'user_education'
 
 
 class MongoLocalConfig(MongoConfig):

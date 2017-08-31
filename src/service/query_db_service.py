@@ -1,4 +1,4 @@
-from src.dao.mongodb_dao import user_profile_dao, user_credential_dao, seq_dao, user_summary_dao
+from src.dao.mongodb_dao import user_profile_dao, user_credential_dao, seq_dao, user_summary_dao, user_education_dao
 
 
 def query_user_profile(filter):
@@ -66,3 +66,19 @@ def update_user_summary(filter, doc):
 def count_user_summary(filter):
     count = user_summary_dao.count_docs(filter)
     return count
+
+
+def insert_user_education(doc):
+    user_education_dao.insert_single_doc(doc)
+
+
+def update_user_education(filter, doc):
+    user_education_dao.update_single_doc(filter, doc)
+
+
+def query_user_educations(filter):
+    docs = user_education_dao.fetch_batch_docs(filter)
+    return docs
+
+def delete_user_education(filter):
+    user_education_dao.delete_single_doc(filter)

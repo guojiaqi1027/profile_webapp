@@ -39,6 +39,9 @@ def successful_ret(**kwargs):
 # -21X Summary fail
 # -210 Summary length error
 
+# -22X Education fail
+# -220 Education start_t or end_t invalid
+# -221 Education start_t is later than end_t 
 
 def failure_ret(code=-1, **kwargs):
     return jsonify(success=0, code=code, **kwargs)

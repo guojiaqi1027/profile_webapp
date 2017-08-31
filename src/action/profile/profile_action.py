@@ -16,9 +16,9 @@ def update_user_profile(uid, profile):
     ret = validate_profile(profile)
     if ret.get('code') < 0:
         return ret
-    
+
     filter = {
-      'uid': uid
+        'uid': uid
     }
     query_db_service.update_user_profile(filter, profile)
     return ret
