@@ -5,7 +5,7 @@ from src.service import query_cache_service
 
 def jsonify(*args, **kwargs):
     headers = {
-      "Access-Control-Allow-Origin" : "http://localhost:3000",
+      "Access-Control-Allow-Origin" : "http://localhost:5000",
       "Access-Control-Allow-Credentials": "true"
     }
     return Response(jsonifyAsText(*args, **kwargs), mimetype='application/json', headers=headers)
@@ -42,6 +42,14 @@ def successful_ret(**kwargs):
 # -22X Education fail
 # -220 Education start_t or end_t invalid
 # -221 Education start_t is later than end_t 
+
+# -3XX Data invalid
+# -300 Email format invalid
+# -301 Date invalid
+# -302 Phone invalid
+# -303 Start_t later than now
+# -304 Start_t later than End_t
+# -305 End_t later than now
 
 def failure_ret(code=-1, **kwargs):
     return jsonify(success=0, code=code, **kwargs)

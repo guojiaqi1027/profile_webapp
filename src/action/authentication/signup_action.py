@@ -2,6 +2,7 @@ from src.service import query_db_service
 from authentication_action import create_authentication_for_uid
 import datetime, re
 from src.action.profile.profile_action import get_profile_by_uid_action
+from src.utils import validator
 def signup(credential, profile):
     ret = validate_credential(credential)
     if ret.get('code') < 0:
@@ -16,6 +17,7 @@ def signup(credential, profile):
     token = token_ret['token']
     profile = get_profile_by_uid_action(uid)
     ret = {
+        'code': 1,
         'token': token,
         'uid': uid
     }
@@ -74,28 +76,20 @@ def validate_profile(profile):
     phone = profile.get('phone')
 
     if birth:
-        try:
-            datetime.datetime.strptime(birth, '%Y-%m-%d')
-        except ValueError:
-            ret = {
-                'code': -205,
-                'msg': 'Birth date invalid'
-            }
+        ret = validator.date_validator(birth)
+        if ret['code'] < 0:
             return ret
 
-    if email and not re.match('.+\@.+\..+', email):
-        ret = {
-            'code': -206,
-            'msg': 'Email format invalid'
-        }
-        return ret
+    if email:
+        ret = validator.email_validator(email)
+        if ret['code'] < 0:
+            return ret
 
-    if phone and not re.match('^1(3|4|5|7|8)\d{9}$', phone):
-        ret = {
-            'code': -207,
-            'msg': 'Phone number format invalid'
-        }
-        return ret
+    if phone:
+        ret = validator.phone_validator(phone)
+        if ret['code'] < 0:
+            return ret
+
 
     ret = {
         'code': 1

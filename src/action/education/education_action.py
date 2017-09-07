@@ -1,4 +1,5 @@
 from src.service import query_db_service
+from src.utils import validator
 import datetime
 
 
@@ -27,45 +28,9 @@ def insert_education(uid, education):
 def validate_education(education):
     start_t = education.get('start_t')
     end_t = education.get('end_t')
-    try:
-        start_t = datetime.datetime.strptime(start_t, '%Y-%m-%d')
-    except ValueError:
-        ret = {
-            'code': -220,
-            'msg': 'Education start time or end time is invalid date'
-        }
+    ret = validator.start_end_validator(start_t, end_t)
+    if ret['code'] < 0:
         return ret
-    
-    if start_t > datetime.datetime.now():
-        ret = {
-            'code': -224,
-            'msg': 'Start time cannot later than now'
-        }
-        return ret
-
-    if end_t != 'present':
-        try:
-            end_t = datetime.datetime.strptime(end_t, '%Y-%m-%d')
-        except ValueError:
-            ret = {
-                'code': -220,
-                'msg': 'Education start time or end time is invalid date'
-            }
-            return ret
-
-        if start_t >= end_t:
-            ret = {
-                'code': -221,
-                'msg': 'Education start time is later than end time'
-            }
-            return ret
-        
-        if end_t > datetime.datetime.now():
-            ret = {
-                'code': -225,
-                'msg': 'End time cannot later than now'
-            }
-            return ret
 
     school = education.get('school')
     if not school:
@@ -74,6 +39,7 @@ def validate_education(education):
             'msg': 'School is empty'
         }
         return ret
+
     major = education.get('major')
     if not major:
         ret = {
