@@ -43,6 +43,8 @@ def successful_ret(**kwargs):
 # -220 Education start_t or end_t invalid
 # -221 Education start_t is later than end_t 
 
+# -23X Experience fail
+
 # -3XX Data invalid
 # -300 Email format invalid
 # -301 Date invalid

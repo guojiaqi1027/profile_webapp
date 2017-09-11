@@ -42,3 +42,4 @@ user_profile_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_PROFILE_COLLECTI
 seq_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.SEQUENCE_COLLECTION)
 user_summary_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_SUMMARY_COLLECTION)
 user_education_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_EDUCATION_COLLECTION)
+user_experience_dao = MongoDBDao(mongodb_client, MONGO_CONFIG.USER_EXPERIENCE_COLLECTION)
