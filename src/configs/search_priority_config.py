@@ -1,0 +1,8 @@
+class SearchPriorityConfig:
+    PROFILE_PRIORITY = 1
+    SUMMARY_PRIORITY = 2
+    EDUCATION_PRIORITY = 3
+    EXPERIENCE_PRIORITY = 4
+
+
+SEARCH_PRIORITY_CONFIG = SearchPriorityConfig()

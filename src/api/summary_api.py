@@ -1,4 +1,4 @@
-import json
+
 from flask import Blueprint, request
 from src.action.summary import summary_action
 from src.action.authentication import token_required

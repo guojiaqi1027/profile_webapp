@@ -4,6 +4,7 @@ from src.action.authentication import token_required
 from src.action.profile.profile_action import update_user_profile
 from src.action.response.respons_action import token_ret
 from src.action.profile import get_profile_by_uid_action
+from src.action.profile import profile_action
 
 
 profile_api = Blueprint('profile_api', __name__, url_prefix='/profile_api')

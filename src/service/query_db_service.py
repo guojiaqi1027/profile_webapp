@@ -12,6 +12,13 @@ def insert_user_profile(doc):
 def update_user_profile(filter, doc):
     user_profile_dao.update_single_doc(filter, doc)
 
+
+def query_all_profiles():
+    filter = dict()
+    docs = user_credential_dao.fetch_batch_docs(filter)
+    return docs
+
+
 def query_user_credential(filter):
     doc = user_credential_dao.fetch_single_doc(filter);
     return doc
