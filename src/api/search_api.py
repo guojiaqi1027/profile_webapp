@@ -9,7 +9,9 @@ search_api = Blueprint('search_api', __name__, url_prefix='/search_api')
 @search_api.route('/search', methods=['GET', 'POST'])
 @token_required
 def search(uid, token):
-    key = request.values.get('key').lower()
+    keys = request.values.get('keys')
+    keys = keys.lower()
+    keys = keys.split('+')
     uids = search_action.get_all_uids()
-    items = search_action.search_all_uids(key, uids)
+    items = search_action.search_all_uids(keys, uids)
     return token_ret(items=items, token=token)
